@@ -4,7 +4,7 @@ Painting Canvas
 cd into painting-canvas dir
 
 Compilation:
-- javac -d "classes" canvas\exception\*.java
+- javac -d "classes" canvas\exception\\*.java
 - javac -d "classes" canvas\Canvas.java
 - javac -d "classes" -classpath "classes" canvas\CanvasApplication.java
 
