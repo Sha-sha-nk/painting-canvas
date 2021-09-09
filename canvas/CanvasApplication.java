@@ -3,6 +3,7 @@ package canvas;
 import java.util.Scanner;
 
 import canvas.exception.InvalidAlignment;
+import canvas.exception.InvalidCanvasDimensions;
 import canvas.exception.NoCanvasException;
 import canvas.exception.OutOfCanvasException;
 
@@ -18,7 +19,11 @@ class CanvasApplication {
 			command = sc.next();
 			if (command.equals("C")) {
 
-				c = createCanvas(sc);
+				try {
+					c = createCanvas(sc);
+				} catch (InvalidCanvasDimensions e) {
+					System.out.println("Exception message: " + e.getMessage());
+				}
 
 			} else if (command.equals("L")) {
 
@@ -55,10 +60,13 @@ class CanvasApplication {
 
 	}
 
-	static Canvas createCanvas(Scanner sc) {
+	static Canvas createCanvas(Scanner sc) throws InvalidCanvasDimensions {
 
 		int width = sc.nextInt();
 		int height = sc.nextInt();
+		if (width <= 0 || height <= 0) {
+            throw new InvalidCanvasDimensions("Both width and height should be positive integer");
+		}
 		System.out.println("Creating Canvas");
 		return new Canvas(width, height);
 
