@@ -14,6 +14,10 @@ class Canvas {
 		printCanvas();
 	}
 
+	public char[][] getCanvas() {
+		return canvas;
+	}
+
 	private boolean isLineHorizontal(int y1, int y2) {
 		return y1 == y2;
 	}
@@ -64,7 +68,7 @@ class Canvas {
 
 	public void createLine(int x1, int y1, int x2, int y2) throws OutOfCanvasException, InvalidAlignment {
 		if (!isPointWithinCanvas(x1, y1) || !isPointWithinCanvas(x2, y2)) {
-			throw new OutOfCanvasException("Given lines crosses out of canvas");
+			throw new OutOfCanvasException("Given line crosses out of canvas.");
 		}
 		if (isLineHorizontal(y1, y2)) {
 			if (x1 > x2) {
@@ -96,7 +100,7 @@ class Canvas {
 		}
 		if (x2 < x1 || y2 < y1) {
 			throw new InvalidAlignment("Point (" + x2 + "," + y2
-					+ ") don't lie on lower right corner relative to Point (" + x1 + "," + y2 + ").");
+					+ ") don't lie on lower right corner relative to Point (" + x1 + "," + y1 + ").");
 		}
 		for (int i = x1; i <= x2; i++) {
 			canvas[y1 - 1][i - 1] = 'x';

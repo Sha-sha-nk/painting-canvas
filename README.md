@@ -30,7 +30,7 @@ Creating Canvas
  --------------------
 enter command: L 200 200 1 1
 Drawing Line
-Exception message: Given lines crosses out of canvas
+Exception message: Given line crosses out of canvas.
 enter command: L 1 1 2 2
 Drawing Line
 Exception message: Only vertical and horizontal lines are allowed.
@@ -55,7 +55,7 @@ Drawing Rectangle
 Exception message: Given rectangle crosses out of canvas.
 enter command: R 3 3 1 1
 Drawing Rectangle
-Exception message: Point (1,1) don't lie on lower right corner relative to Point (3,1).
+Exception message: Point (1,1) don't lie on lower right corner relative to Point (3,3).
 enter command: R 14 1 18 3
 Drawing Rectangle
  --------------------
