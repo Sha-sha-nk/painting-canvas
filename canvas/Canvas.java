@@ -25,7 +25,8 @@ class Canvas {
 	private boolean isLineVertical(int x1, int x2) {
 		return x1 == x2;
 	}
-
+    
+	// prints canvas current state
 	private void printCanvas() {
 		System.out.print(" ");
 		for (int i = 0; i < width; i++)
@@ -51,7 +52,9 @@ class Canvas {
 		y--;
 		return x >= 0 && x < width && y >= 0 && y < height;
 	}
-
+    
+	
+	// paints current cell and make paint request to valid neighboring cells
 	private void paintNeighbour(int x, int y, char prevColour, char newColour) {
 		canvas[y][x] = newColour;
 		int[] dx = { 1, -1, 0, 0 };
@@ -118,8 +121,9 @@ class Canvas {
 			throw new OutOfCanvasException("Cannot paint, point lie outside canvas.");
 		}
 		char prevColour = canvas[y - 1][x - 1];
-
-		if (prevColour != newColour) {
+        
+		// optimization to make paint request only if color is different than previous.
+		if (prevColour != newColour) { 
 			paintNeighbour(x - 1, y - 1, prevColour, newColour);
 		}
 		printCanvas();

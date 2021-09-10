@@ -13,10 +13,16 @@ run : java -classpath "classes" canvas.CanvasApplication
 
 Dry Run:
 ```
+enter command: TT
+Exception message: Only Valid Commands [B,C,L,R,Q] are allowed
 enter command: T
-Invalid command!
-enter command: B 1 2 r
-Exception message: Please create canvas first
+Exception message: Only Valid Commands [B,C,L,R,Q] are allowed
+enter command: C e 4
+Exception message: width should be integer.
+enter command: C 20 e
+Exception message: height should be integer.
+enter command: C -1 0
+Exception message: Both width and height should be positive integer
 enter command: C 20 4
 Creating Canvas
  --------------------
@@ -25,7 +31,15 @@ Creating Canvas
 |                    |
 |                    |
  --------------------
-enter command: L 200 200 1 1
+enter command: L e 1 1 1
+Exception message: First Point's x coordinate should be integer.
+enter command: L 1 e 1 1
+Exception message: First Point's y coordinate should be integer.
+enter command: L 1 1 e 1
+Exception message: Second Point's x coordinate should be integer.
+enter command: L 1 1 1 e
+Exception message: Second Point's y coordinate should be integer.
+enter command: L 1 1 202 202
 Drawing Line
 Exception message: Given line crosses out of canvas.
 enter command: L 1 1 2 2
@@ -35,7 +49,7 @@ enter command: L 1 2 6 2
 Drawing Line
  --------------------
 |                    |
-|xxxxxx              |
+|xxxxx               |
 |                    |
 |                    |
  --------------------
@@ -43,27 +57,36 @@ enter command: L 6 3 6 4
 Drawing Line
  --------------------
 |                    |
-|xxxxxx              |
-|     x              |
-|     x              |
+|xxxxx               |
+|    x               |
+|    x               |
  --------------------
-enter command: R 200 200 1 1
+enter command: R e 1 1 1
+Exception message: First Point's x coordinate should be integer.
+enter command: R 1 e 1 1
+Exception message: First Point's y coordinate should be integer.
+enter command: R 1 1 e 1
+Exception message: Second Point's x coordinate should be integer.
+enter command: R 1 1 1 e
+Exception message: Second Point's y coordinate should be integer.
+enter command: R 1 1 202 202
 Drawing Rectangle
 Exception message: Given rectangle crosses out of canvas.
-enter command: R 3 3 1 1
+enter command: R 2 2 1 1
 Drawing Rectangle
-Exception message: Point (1,1) don't lie on lower right corner relative to Point (3,3).
+Exception message: Point (1,1) don't lie on lower right corner relative to Point (2,2).
 enter command: R 14 1 18 3
 Drawing Rectangle
  --------------------
 |             xxxxx  |
-|xxxxxx       x   x  |
-|     x       xxxxx  |
-|     x              |
+|xxxxx        x   x  |
+|    x        xxxxx  |
+|    x               |
  --------------------
-enter command: B 200 3 f
-Painting Canvas
-Exception message: Cannot paint, point lie outside canvas.
+enter command: B e 3 o
+Exception message: Point's x coordinate should be integer.
+enter command: B 10 e o
+Exception message: Point's y coordinate should be integer.
 enter command: B 10 3 o
 Painting Canvas
  --------------------
@@ -72,6 +95,21 @@ Painting Canvas
 |     xoooooooxxxxxoo|
 |     xoooooooooooooo|
  --------------------
+enter command: B 1 4 e
+Painting Canvas
+ --------------------
+|oooooooooooooxxxxxoo|
+|xxxxxxooooooox   xoo|
+|eeeeexoooooooxxxxxoo|
+|eeeeexoooooooooooooo|
+ --------------------
+enter command: B 6 4 w
+Painting Canvas
+ --------------------
+|oooooooooooooxxxxxoo|
+|wwwwwwooooooox   xoo|
+|eeeeewoooooooxxxxxoo|
+|eeeeewoooooooooooooo|
+ --------------------
 enter command: Q
 Program Ends
-```
