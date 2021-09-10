@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import canvas.exception.InvalidAlignment;
 import canvas.exception.InvalidCanvasDimensions;
+import canvas.exception.InvalidInputException;
 import canvas.exception.NoCanvasException;
 import canvas.exception.OutOfCanvasException;
 
@@ -13,75 +14,114 @@ class CanvasApplication {
 		Canvas c = null;
 		Scanner sc = new Scanner(System.in);
 		String command;
+		final String AllowedCommands = "[BCLRQ]";
 
-		do {
+		while (true) {
 			System.out.print("enter command: ");
-			command = sc.next();
-			if (command.equals("C")) {
+			if (sc.hasNext(AllowedCommands)) {
+				command = sc.next();
+				if (command.equals("C")) {
 
+					try {
+						c = createCanvas(sc);
+					} catch (InvalidCanvasDimensions | InvalidInputException e) {
+						System.out.println("Exception message: " + e.getMessage());
+					}
+
+				} else if (command.equals("L")) {
+
+					try {
+						drawLine(sc, c);
+					} catch (NoCanvasException | InvalidInputException e) {
+						System.out.println("Exception message: " + e.getMessage());
+					}
+
+				} else if (command.equals("R")) {
+
+					try {
+						drawRectangle(sc, c);
+					} catch (NoCanvasException | InvalidInputException e) {
+						System.out.println("Exception message: " + e.getMessage());
+					}
+
+				} else if (command.equals("B")) {
+
+					try {
+						paintCanvas(sc, c);
+					} catch (NoCanvasException | InvalidInputException e) {
+						System.out.println("Exception message: " + e.getMessage());
+					}
+
+				} else if (command.equals("Q")) {
+					break;
+				}
+			} else {
 				try {
-					c = createCanvas(sc);
-				} catch (InvalidCanvasDimensions e) {
+					throw new InvalidInputException("Only Valid Commands [B,C,L,R,Q] are allowed");
+				} catch (InvalidInputException e) {
 					System.out.println("Exception message: " + e.getMessage());
 				}
-
-			} else if (command.equals("L")) {
-
-				try {
-					drawLine(sc, c);
-				} catch (NoCanvasException e) {
-					System.out.println("Exception message: " + e.getMessage());
-				}
-
-			} else if (command.equals("R")) {
-
-				try {
-					drawRectangle(sc, c);
-				} catch (NoCanvasException e) {
-					System.out.println("Exception message: " + e.getMessage());
-				}
-
-			} else if (command.equals("B")) {
-
-				try {
-					paintCanvas(sc, c);
-				} catch (NoCanvasException e) {
-					System.out.println("Exception message: " + e.getMessage());
-				}
-
-			} else if (!command.equals("Q")) {
-				System.out.println("Invalid command!");
 			}
-
-		} while (!command.equals("Q"));
+			sc.nextLine();
+		}
+		;
 
 		sc.close();
 		System.out.println("Program Ends");
 
 	}
 
-	static Canvas createCanvas(Scanner sc) throws InvalidCanvasDimensions {
+	static Canvas createCanvas(Scanner sc) throws InvalidCanvasDimensions, InvalidInputException {
 
+		while(!sc.hasNextInt()) {
+			sc.next();
+			throw new InvalidInputException("width should be integer.");
+		}
 		int width = sc.nextInt();
+		while (!sc.hasNextInt()) {
+			sc.next();
+			throw new InvalidInputException("height should be integer.");
+		}
 		int height = sc.nextInt();
+		
 		if (width <= 0 || height <= 0) {
-            throw new InvalidCanvasDimensions("Both width and height should be positive integer");
+			throw new InvalidCanvasDimensions("Both width and height should be positive integer");
 		}
 		System.out.println("Creating Canvas");
 		return new Canvas(width, height);
 
 	}
 
-	static void drawLine(Scanner sc, Canvas c) throws NoCanvasException {
-
+	static void drawLine(Scanner sc, Canvas c) throws NoCanvasException, InvalidInputException {
+        
+		while(!sc.hasNextInt()) {
+			sc.next();
+			throw new InvalidInputException("First Point's x coordinate should be integer.");
+		}
 		int x1 = sc.nextInt();
+		
+		while(!sc.hasNextInt()) {
+			sc.next();
+			throw new InvalidInputException("First Point's y coordinate should be integer.");
+		}
 		int y1 = sc.nextInt();
+		
+		while(!sc.hasNextInt()) {
+			sc.next();
+			throw new InvalidInputException("Second Point's x coordinate should be integer.");
+		}
 		int x2 = sc.nextInt();
+		
+		while(!sc.hasNextInt()) {
+			sc.next();
+			throw new InvalidInputException("Second Point's y coordinate should be integer.");
+		}
 		int y2 = sc.nextInt();
 
 		if (c == null) {
 			throw new NoCanvasException("Please create canvas first");
 		}
+		
 		System.out.println("Drawing Line");
 		try {
 			c.createLine(x1, y1, x2, y2);
@@ -90,11 +130,30 @@ class CanvasApplication {
 		}
 	}
 
-	static void drawRectangle(Scanner sc, Canvas c) throws NoCanvasException {
+	static void drawRectangle(Scanner sc, Canvas c) throws NoCanvasException, InvalidInputException {
 
+		while(!sc.hasNextInt()) {
+			sc.next();
+			throw new InvalidInputException("First Point's x coordinate should be integer.");
+		}
 		int x1 = sc.nextInt();
+		
+		while(!sc.hasNextInt()) {
+			sc.next();
+			throw new InvalidInputException("First Point's y coordinate should be integer.");
+		}
 		int y1 = sc.nextInt();
+		
+		while(!sc.hasNextInt()) {
+			sc.next();
+			throw new InvalidInputException("Second Point's x coordinate should be integer.");
+		}
 		int x2 = sc.nextInt();
+		
+		while(!sc.hasNextInt()) {
+			sc.next();
+			throw new InvalidInputException("Second Point's y coordinate should be integer.");
+		}
 		int y2 = sc.nextInt();
 
 		if (c == null) {
@@ -108,10 +167,20 @@ class CanvasApplication {
 		}
 	}
 
-	static void paintCanvas(Scanner sc, Canvas c) throws NoCanvasException {
-
+	static void paintCanvas(Scanner sc, Canvas c) throws NoCanvasException, InvalidInputException {
+       
+		while(!sc.hasNextInt()) {
+			sc.next();
+			throw new InvalidInputException("Point's x coordinate should be integer.");
+		}
 		int x = sc.nextInt();
+		
+		while(!sc.hasNextInt()) {
+			sc.next();
+			throw new InvalidInputException("Point's y coordinate should be integer.");
+		}
 		int y = sc.nextInt();
+		
 		char newColour = sc.next().charAt(0);
 
 		if (c == null) {
